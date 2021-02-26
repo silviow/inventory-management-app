@@ -3,17 +3,19 @@ package edu.unipampa.poo1.inventory.management;
 public class ProdutoUnidade extends Produto {
     private int _quantidade;
 
-    public ProdutoUnidade(String nome, String descricao, double preco, int quantidade) {
-        super(nome, descricao, preco, TipoQuantidade.UNIDADE);
+    public ProdutoUnidade(String nome, String descricao, double preco, double quantidade) {
+        super(nome, descricao, preco);
 
-        _quantidade = quantidade;
+        _quantidade = (int) quantidade;
     }
 
-    public int getQuantidade() {
+    @Override
+    public double getQuantidade() {
         return _quantidade;
     }
 
-    public void setQuantidade(int quantidade) {
-        _quantidade = quantidade;
+    @Override
+    public void setQuantidade(double quantidade) {
+        _quantidade = (int) quantidade;
     }
 }

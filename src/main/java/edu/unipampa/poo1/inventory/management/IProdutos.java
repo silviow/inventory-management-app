@@ -14,5 +14,4 @@ public interface IProdutos {
     public abstract boolean addQuantidade(int codigo, double quantidade);
 
     public abstract boolean subQuantidade(int codigo, double quantidade);
-
 }

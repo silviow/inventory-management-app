@@ -40,7 +40,7 @@ public class Produtos implements IProdutos {
             return false;
         }
 
-        modificaQuantidadeEspecifica(produto, nova, true);
+        produto.setQuantidade(nova);
 
         return true;
     }
@@ -62,18 +62,18 @@ public class Produtos implements IProdutos {
             return false;
         }
 
-        modificaQuantidadeEspecifica(produto, quantidade, false);
+        produto.setQuantidade(produto.getQuantidade() + quantidade);
 
         return true;
     }
 
     public boolean subQuantidade(int codigo, double quantidade) {
         var produto = getProduto(codigo);
-        if (produto == null) {
+        if (produto == null || (produto.getQuantidade() - quantidade) < 0) {
             return false;
         }
 
-        modificaQuantidadeEspecifica(produto, (-quantidade), false);
+        produto.setQuantidade(produto.getQuantidade() - quantidade);
 
         return true;
     }
@@ -89,24 +89,5 @@ public class Produtos implements IProdutos {
         }
 
         return invalido;
-    }
-
-    private void modificaQuantidadeEspecifica(Produto produto, double valor, boolean update) {
-        var index = estoque.indexOf(produto);
-        var tipoQuantidade = produto.getTipoQuantidade();
-
-        if (tipoQuantidade.equals(TipoQuantidade.UNIDADE)) {
-            var produtoUnidade = (ProdutoUnidade) produto;
-            var novoValor = update ? (int) valor : produtoUnidade.getQuantidade() + (int) valor;
-            produtoUnidade.setQuantidade(novoValor);
-            estoque.set(index, produtoUnidade);
-
-            return;
-        }
-
-        var produtoQuilo = (ProdutoQuilo) produto;
-        var novoValor = update ? valor : produtoQuilo.getQuantidade() + valor;
-        produtoQuilo.setQuantidade(novoValor);
-        estoque.set(index, produtoQuilo);
     }
 }

@@ -6,15 +6,13 @@ public abstract class Produto {
     private String _nome;
     private String _descricao;
     private double _preco;
-    private TipoQuantidade _tipoQtd;
 
-    protected Produto(String nome, String descricao, double preco, TipoQuantidade tipoQtd) {
+    protected Produto(String nome, String descricao, double preco) {
         qtdProdutos++;
         _codigo = qtdProdutos;
         _nome = nome;
         _descricao = descricao;
         _preco = preco;
-        _tipoQtd = tipoQtd;
     }
 
     protected int getCodigo() {
@@ -45,11 +43,7 @@ public abstract class Produto {
         _preco = preco;
     }
 
-    protected TipoQuantidade getTipoQuantidade() {
-        return _tipoQtd;
-    }
+    public abstract void setQuantidade(double quantidade);
 
-    protected void setTipoQuantidade(TipoQuantidade tipoQtd) {
-        _tipoQtd = tipoQtd;
-    }
+    public abstract double getQuantidade();
 }

@@ -15,14 +15,14 @@ public class Produtos implements IProdutos {
     }
 
     public boolean removeProduto(int codigo) {
-        for (Produto produto : estoque) {
-            if (produto.getCodigo() == codigo) {
-                estoque.remove(produto);
-                return true;
-            }
+        var produto = getProduto(codigo);
+        if (produto == null) {
+            return false;
         }
 
-        return false;
+        estoque.remove(produto);
+
+        return true;
     }
 
     public Produto getProduto(int codigo) {

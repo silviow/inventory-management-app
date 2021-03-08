@@ -11,11 +11,10 @@ public class NotaFiscal {
     private Calendar data;
     private List<Item> arrayItems = new ArrayList<>();
 
-    public NotaFiscal(List<Item> arrayEntrada){
+    public NotaFiscal(){
         quantidade++;
         codigo = quantidade;
         data = Calendar.getInstance();
-        arrayItems.addAll(arrayEntrada);
     }
 
     public int getCodigo(){
@@ -49,10 +48,6 @@ public class NotaFiscal {
             return true;
         }
         return false;
-    }
-
-    public void setItem(List<Item> arrayEntrada){
-        arrayItems.addAll(arrayEntrada);
     }
 
     private int temEsseItem(Item item){

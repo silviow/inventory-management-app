@@ -36,7 +36,7 @@ public class NotasFiscais implements INotasFiscais{
     }
 
     public boolean addItem(int codigo, Item item){
-        return arrayNotasFiscais.get(codigo).addItem(item);
+        return arrayNotasFiscais.get(codigo).addItems(item);
     }
 
     public boolean removeItem(int codigo, Item item){

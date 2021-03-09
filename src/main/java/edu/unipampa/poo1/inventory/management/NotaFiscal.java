@@ -6,14 +6,14 @@ import java.util.List;
 
 public class NotaFiscal {
     
-    public static int quantidade;
+    public static int numero;
     private int codigo;
     private Calendar data;
     private List<Item> arrayItems = new ArrayList<>();
 
     public NotaFiscal(){
-        quantidade++;
-        codigo = quantidade;
+        numero++;
+        codigo = numero;
         data = Calendar.getInstance();
     }
 
@@ -25,16 +25,17 @@ public class NotaFiscal {
         return data;
     }
 
-    public List<Item> getItem(){
+    public List<Item> getItems(){
         return arrayItems;
     }
 
     public boolean addItem(Item item){
-        int i = temEsseItem(item);
-        if (i != -1 && item.getQuantidade() <= item.getProduto().getQuantidade()){
-            arrayItems.get(i).setQuantidade(arrayItems.get(i).getQuantidade() + item.getQuantidade());
+        boolean tem = temEsseItem(item);
+        if (tem && item.getQuantidade() <= item.getProduto().getQuantidade()){
+            int n = findItem(item);
+            arrayItems.get(n).setQuantidade(arrayItems.get(n).getQuantidaden + item.getQuantidade());
             return true;
-        }else if (i != -1){
+        }else if (tem){
             arrayItems.add(item);
             return true;
         }
@@ -50,12 +51,20 @@ public class NotaFiscal {
         return false;
     }
 
-    private int temEsseItem(Item item){
+    private boolean temEsseItem(Item item){
+        for (Item i : arrayItems){
+            if (i.getProduto().getCodigo() == item.getProduto().getCodigo()){
+                return true;
+            }
+        }
+        return false;
+    }
+    private int findItem(Item item){
         for (Item i : arrayItems){
             if (i.getProduto().getCodigo() == item.getProduto().getCodigo()){
                 return arrayItems.indexOf(i);
             }
         }
-        return -1;
+        return 0;
     }
 }

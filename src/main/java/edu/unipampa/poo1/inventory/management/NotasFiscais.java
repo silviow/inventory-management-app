@@ -44,7 +44,7 @@ public class NotasFiscais implements INotasFiscais{
     }
 
     public boolean removeItem(int codigo, Item item){
-        return arrayNotasFiscais.get(codigo).removeItem(item);
+        return arrayNotasFiscais.get(codigo - 1).removeItem(item.getProduto().getCodigo());
     }
 
     private double getSoma(List<Item> arrayItem){

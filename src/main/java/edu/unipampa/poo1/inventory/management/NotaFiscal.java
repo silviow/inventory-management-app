@@ -35,7 +35,7 @@ public class NotaFiscal {
             int n = findItem(item);
             arrayItems.get(n).setQuantidade(arrayItems.get(n).getQuantidaden + item.getQuantidade());
             return true;
-        }else if (tem){
+        }else if (item.getQuantidade() <= item.getProduto().getQuantidade()){
             arrayItems.add(item);
             return true;
         }

@@ -34,6 +34,10 @@ public class Produtos implements IProdutos {
         return null;
     }
 
+    public List<Produto> getEstoque() {
+        return estoque;
+    }
+
     public boolean updateQuantidade(int codigo, double nova) {
         var produto = getProduto(codigo);
         if (produto == null) {

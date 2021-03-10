@@ -26,11 +26,15 @@ public class NotasFiscais implements INotasFiscais{
         return nf;
     }
 
+    public List<NotaFiscal> getNotasFiscais() {
+        return arrayNotasFiscais;
+    }
+
     public double getTotal(int codigo){
         double total = 0f;
         NotaFiscal nf = findNotaFiscal(codigo);
         if (nf != null){
-            total = getSoma(nf.getItem());
+            total = getSoma(nf.getItems());
         }
         return total;
     }

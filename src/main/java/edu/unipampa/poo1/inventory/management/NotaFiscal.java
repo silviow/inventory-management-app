@@ -25,7 +25,7 @@ public class NotaFiscal {
         return data;
     }
 
-    public List<Item> getItem(){
+    public List<Item> getItems(){
         return arrayItems;
     }
 

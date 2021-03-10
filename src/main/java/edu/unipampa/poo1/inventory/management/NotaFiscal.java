@@ -33,7 +33,7 @@ public class NotaFiscal {
         boolean tem = temEsseItem(item);
         if (tem && item.getQuantidade() <= item.getProduto().getQuantidade()){
             int n = findItem(item);
-            arrayItems.get(n).setQuantidade(arrayItems.get(n).getQuantidaden + item.getQuantidade());
+            arrayItems.get(n).setQuantidade(arrayItems.get(n).getQuantidade() + item.getQuantidade());
             return true;
         }else if (item.getQuantidade() <= item.getProduto().getQuantidade()){
             arrayItems.add(item);
@@ -43,9 +43,10 @@ public class NotaFiscal {
     }
 
     public boolean removeItem(Item item){
-        int i = temEsseItem(item);
-        if (i != -1){
-            arrayItems.remove(arrayItems.get(i));
+        boolean tem = temEsseItem(item);
+        if (tem){
+            int n = findItem(item);
+            arrayItems.remove(arrayItems.get(n));
             return true;
         }
         return false;

@@ -287,7 +287,9 @@ public class Interacao {
                         int quantidadeDoProduto = entradas.nextInt();
 
                         Item novoItem = new Item(produtoASerIncluido, quantidadeDoProduto);
-                        nf.addItem(novoItem);
+                        boolean itemFoiAdicionado = nf.addItem(novoItem);
+
+                        if (itemFoiAdicionado) System.out.println("Produto " + (i + 1) + " adicionado à nota fiscal :)");
                     } else {
                         System.out.println(
                             "Nenhum produto com o código " +
@@ -309,6 +311,38 @@ public class Interacao {
                 break;
 
             case 7:
+                System.out.println("Digite o código da nota fiscal a ser consultada:");
+                int codigoDaNotaFiscal = entradas.nextInt();
+
+                NotaFiscal notaFiscalEncontrada = notasFiscais.getNotaFiscal(codigoDaNotaFiscal);
+
+                if (notaFiscalEncontrada != null) {
+                    System.out.println("Veja as informações da nota fiscal:");
+                    System.out.println("Código: " + notaFiscalEncontrada.getCodigo());
+                    System.out.println("Data: " + notaFiscalEncontrada.getCalendar().getTime());
+                    System.out.println("Itens: ");
+
+                    List<Item> itensDaNota = notaFiscalEncontrada.getItems();
+
+                    for (int j = 0; j < itensDaNota.size(); j++) {
+                        Produto produto = itensDaNota.get(j).getProduto();
+                        int quantidade = itensDaNota.get(j).getQuantidade();
+
+                        System.out.println(
+                            "Código: " + produto.getCodigo() +
+                            " | Nome: " + produto.getNome() +
+                            " | Descrição: " + produto.getDescricao() +
+                            " | Preço: " + produto.getPreco() +
+                            " | Quantidade: " + quantidade
+                        );
+                    }
+                } else {
+                    System.out.println(
+                        "Nenhuma nota fiscal com o código " +
+                        codigoDaNotaFiscal + 
+                        " foi encontrada :("
+                    );
+                }
                 break;
 
             case 8:

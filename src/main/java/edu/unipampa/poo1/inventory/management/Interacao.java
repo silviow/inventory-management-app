@@ -290,7 +290,12 @@ public class Interacao {
                         Item novoItem = new Item(produtoASerIncluido, quantidadeDoProduto);
                         boolean itemFoiAdicionado = nf.addItem(novoItem);
 
-                        if (itemFoiAdicionado) System.out.println("Produto " + (i + 1) + " adicionado à nota fiscal :)");
+                        if (itemFoiAdicionado){
+                            novoItem.getProduto().setQuantidade(novoItem.getProduto().getQuantidade() - quantidadeDoProduto);
+                            System.out.println("Produto " + (i + 1) + " adicionado à nota fiscal :)");
+                        }else {
+                            System.out.println("O produto não pode ser adicionado a nota fiscal");
+                        }
                     } else {
                         System.out.println(
                             "Nenhum produto com o código " +
@@ -380,6 +385,7 @@ public class Interacao {
                     System.out.print("\n");
                     System.out.println("O que você deseja alterar?");
                     System.out.println("    1 - Adicionar um novo item à nota fiscal");
+                    System.out.println("    2 = Excluir item da nota fiscal");
                     int infoASerAlterada = entradas.nextInt();
 
                     switch (infoASerAlterada) {
@@ -405,7 +411,12 @@ public class Interacao {
                                 Item novoItem = new Item(produtoASerIncluidoNaNF, quantidadeDoProduto);
                                 boolean itemFoiAdicionado = notaFiscalAAlterar.addItem(novoItem);
         
-                                if (itemFoiAdicionado) System.out.println("Produto adicionado à nota fiscal :)");
+                                if (itemFoiAdicionado){
+                                    novoItem.getProduto().setQuantidade(novoItem.getProduto().getQuantidade() - quantidadeDoProduto);
+                                    System.out.println("Produto adicionado à nota fiscal :)");
+                                }else{
+                                    System.out.println("O item não pode ser adicionado à nota fiscal");
+                                }
                             } else {
                                 System.out.println(
                                     "Nenhum produto com o código " +
@@ -414,7 +425,26 @@ public class Interacao {
                                 );
                             }
                             break;
-                    
+                            
+                        case 2:
+                            System.out.println("Digite o codigo do item que você deseja excluir da Nota Fiscal");
+                            int codigoProduto = entradas.nextInt();
+
+                            List<Item> listaItens = notasFiscais.getNotaFiscal(codigoDaNotaAAlterar).getItems();
+                            boolean deuCerto = false;
+                            for (Item item : listaItens){
+                                if (item.getProduto().getCodigo() == codigoProduto){
+                                    deuCerto = notasFiscais.removeItem(codigoDaNotaAAlterar, item);
+                                    if (deuCerto){
+                                        item.getProduto().setQuantidade(item.getProduto().getQuantidade() + item.getQuantidade());
+                                        System.out.println("O item foi retirado com sucesso da Nota Fiscal");
+                                    } else{
+                                        System.out.println("O item não pode ser retirado da Nota Fiscal");
+                                    }
+                                    break;
+                                }
+                            }
+                            break;
                         default:
                             System.out.print("\n");
                             System.out.println("Entrada inválida :(");

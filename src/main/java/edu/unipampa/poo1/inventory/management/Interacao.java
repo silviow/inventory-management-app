@@ -1,6 +1,7 @@
 package edu.unipampa.poo1.inventory.management;
 
 import java.util.Scanner;
+import java.util.Calendar;
 import java.util.List;
 
 public class Interacao {
@@ -315,6 +316,36 @@ public class Interacao {
                 break;
 
             case 9:
+                List<NotaFiscal> arrayNotasFiscais = notasFiscais.getNotasFiscais();
+                
+                System.out.println("Digite o dia");
+                int dia = entradas.nextInt();
+                System.out.println("Digite o mês");
+                int mes = entradas.nextInt();
+                System.out.println("Digite o ano");
+                int ano = entradas.nextInt();
+
+                Calendar data;
+                int diaData;
+                int mesData;
+                int anoData;
+                double valorVendas = 0f;
+                for (NotaFiscal notaF : arrayNotasFiscais){
+                    data = notaF.getCalendar();
+                    diaData = data.get(Calendar.DAY_OF_MONTH);
+                    mesData = data.get(Calendar.MONTH) + 1;
+                    anoData = data.get(Calendar.YEAR);
+                    
+                    if (dia == diaData && mes == mesData && ano == anoData){
+                        List<Item> listItens = notaF.getItems();
+                        for (Item item : listItens){
+                            valorVendas += item.getProduto().getPreco() * item.getQuantidade();
+                        }
+                    }
+                }
+                System.out.printf("No dia %d/%d/%d foi vendido R$%.2f em produtos", dia, mes, ano, valorVendas);
+
+                exibirMenu(entradas);
                 break;
 
             case 10:

@@ -288,7 +288,9 @@ public class Interacao {
                         int quantidadeDoProduto = entradas.nextInt();
 
                         Item novoItem = new Item(produtoASerIncluido, quantidadeDoProduto);
-                        nf.addItem(novoItem);
+                        boolean itemFoiAdicionado = nf.addItem(novoItem);
+
+                        if (itemFoiAdicionado) System.out.println("Produto " + (i + 1) + " adicionado à nota fiscal :)");
                     } else {
                         System.out.println(
                             "Nenhum produto com o código " +
@@ -310,9 +312,129 @@ public class Interacao {
                 break;
 
             case 7:
+                System.out.println("Digite o código da nota fiscal a ser consultada:");
+                int codigoDaNotaFiscal = entradas.nextInt();
+
+                NotaFiscal notaFiscalEncontrada = notasFiscais.getNotaFiscal(codigoDaNotaFiscal);
+
+                if (notaFiscalEncontrada != null) {
+                    System.out.println("Veja as informações da nota fiscal:");
+                    System.out.println("Código: " + notaFiscalEncontrada.getCodigo());
+                    System.out.println("Data: " + notaFiscalEncontrada.getCalendar().getTime());
+                    System.out.println("Itens: ");
+
+                    List<Item> itensDaNota = notaFiscalEncontrada.getItems();
+
+                    for (int j = 0; j < itensDaNota.size(); j++) {
+                        Produto produto = itensDaNota.get(j).getProduto();
+                        int quantidade = itensDaNota.get(j).getQuantidade();
+
+                        System.out.println(
+                            "Código: " + produto.getCodigo() +
+                            " | Nome: " + produto.getNome() +
+                            " | Descrição: " + produto.getDescricao() +
+                            " | Preço: " + produto.getPreco() +
+                            " | Quantidade: " + quantidade
+                        );
+                    }
+                } else {
+                    System.out.println(
+                        "Nenhuma nota fiscal com o código " +
+                        codigoDaNotaFiscal + 
+                        " foi encontrada :("
+                    );
+                }
+
+                exibirMenu(entradas);
                 break;
 
             case 8:
+                System.out.println("Digite o código da nota fiscal a ser alterada:");
+                int codigoDaNotaAAlterar = entradas.nextInt();
+
+                NotaFiscal notaFiscalAAlterar = notasFiscais.getNotaFiscal(codigoDaNotaAAlterar);
+                
+                if (notaFiscalAAlterar != null) {
+                    System.out.println("Atualmente, essas são as informações da nota fiscal #" + codigoDaNotaAAlterar + ":");
+                    System.out.print("\n");
+
+                    System.out.println("Código: " + notaFiscalAAlterar.getCodigo());
+                    System.out.println("Data: " + notaFiscalAAlterar.getCalendar().getTime());
+                    System.out.println("Itens: ");
+
+                    List<Item> itensDaNota = notaFiscalAAlterar.getItems();
+
+                    for (int j = 0; j < itensDaNota.size(); j++) {
+                        Produto produto = itensDaNota.get(j).getProduto();
+                        int quantidade = itensDaNota.get(j).getQuantidade();
+
+                        System.out.println(
+                            "Código: " + produto.getCodigo() +
+                            " | Nome: " + produto.getNome() +
+                            " | Descrição: " + produto.getDescricao() +
+                            " | Preço: " + produto.getPreco() +
+                            " | Quantidade: " + quantidade
+                        );
+                    }
+                    
+                    System.out.print("\n");
+                    System.out.println("O que você deseja alterar?");
+                    System.out.println("    1 - Adicionar um novo item à nota fiscal");
+                    int infoASerAlterada = entradas.nextInt();
+
+                    switch (infoASerAlterada) {
+                        case 1:
+                            System.out.println("Digite o código do produto a ser incluído na nota fiscal:");
+                            int codigoDoNovoProdutoDaNF = entradas.nextInt();
+        
+                            Produto produtoASerIncluidoNaNF = produtos.getProduto(codigoDoNovoProdutoDaNF);
+        
+                            if (produtoASerIncluidoNaNF != null) {
+                                System.out.println("Veja as informações deste produto:");
+                                System.out.println(
+                                    "Código: " + produtoASerIncluidoNaNF.getCodigo() +
+                                    " | Nome: " + produtoASerIncluidoNaNF.getNome() +
+                                    " | Descrição: " + produtoASerIncluidoNaNF.getDescricao() +
+                                    " | Preço: " + produtoASerIncluidoNaNF.getPreco() +
+                                    " | Quantidade: " + produtoASerIncluidoNaNF.getQuantidade()
+                                );
+        
+                                System.out.println("Qual quantidade deste produto deve ser incluída na nota fiscal?");
+                                int quantidadeDoProduto = entradas.nextInt();
+        
+                                Item novoItem = new Item(produtoASerIncluidoNaNF, quantidadeDoProduto);
+                                boolean itemFoiAdicionado = notaFiscalAAlterar.addItem(novoItem);
+        
+                                if (itemFoiAdicionado) System.out.println("Produto adicionado à nota fiscal :)");
+                            } else {
+                                System.out.println(
+                                    "Nenhum produto com o código " +
+                                    produtoASerIncluidoNaNF + 
+                                    " foi encontrado :("
+                                );
+                            }
+                            break;
+                    
+                        default:
+                            System.out.print("\n");
+                            System.out.println("Entrada inválida :(");
+
+                            System.out.print("\n");
+                            System.out.println("O que você deseja alterar?");
+                            System.out.println("    1 - Adicionar um novo item à nota fiscal");
+                            infoASerAlterada = entradas.nextInt();
+
+                            break;
+                    }
+                } else {
+                    System.out.println(
+                        "Nenhuma nota fiscal com o código " +
+                        codigoDaNotaAAlterar + 
+                        " foi encontrada :("
+                    );
+                }
+
+                exibirMenu(entradas);
                 break;
 
             case 9:

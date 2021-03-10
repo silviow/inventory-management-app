@@ -30,9 +30,10 @@ public class NotaFiscal {
     }
 
     public boolean addItem(Item item){
-        boolean tem = temEsseItem(item);
+        int codigo = item.getProduto().getCodigo();
+        boolean tem = temEsseItem(codigo);
         if (tem && item.getQuantidade() <= item.getProduto().getQuantidade()){
-            int n = findItem(item);
+            int n = findItem(codigo);
             arrayItems.get(n).setQuantidade(arrayItems.get(n).getQuantidade() + item.getQuantidade());
             return true;
         }else if (item.getQuantidade() <= item.getProduto().getQuantidade()){
@@ -42,27 +43,28 @@ public class NotaFiscal {
         return false;
     }
 
-    public boolean removeItem(Item item){
-        boolean tem = temEsseItem(item);
+    public boolean removeItem(int codigo){
+
+        boolean tem = temEsseItem(codigo);
         if (tem){
-            int n = findItem(item);
+            int n = findItem(codigo);
             arrayItems.remove(arrayItems.get(n));
             return true;
         }
         return false;
     }
 
-    private boolean temEsseItem(Item item){
+    private boolean temEsseItem(int codigo){
         for (Item i : arrayItems){
-            if (i.getProduto().getCodigo() == item.getProduto().getCodigo()){
+            if (i.getProduto().getCodigo() == codigo){
                 return true;
             }
         }
         return false;
     }
-    private int findItem(Item item){
+    private int findItem(int codigo){
         for (Item i : arrayItems){
-            if (i.getProduto().getCodigo() == item.getProduto().getCodigo()){
+            if (i.getProduto().getCodigo() == codigo){
                 return arrayItems.indexOf(i);
             }
         }

@@ -40,11 +40,19 @@ public class NotasFiscais implements INotasFiscais{
     }
 
     public boolean addItem(int codigo, Item item){
-        return arrayNotasFiscais.get(codigo).addItem(item);
+        NotaFiscal nf = findNotaFiscal(codigo);
+        if (nf != null){
+            return nf.addItem(item);
+        }
+        return false;
     }
 
     public boolean removeItem(int codigo, Item item){
-        return arrayNotasFiscais.get(codigo - 1).removeItem(item.getProduto().getCodigo());
+        NotaFiscal nf = findNotaFiscal(codigo);
+        if (nf != null){
+            return nf.removeItem(item.getProduto().getCodigo());
+        }
+        return false;
     }
 
     private double getSoma(List<Item> arrayItem){

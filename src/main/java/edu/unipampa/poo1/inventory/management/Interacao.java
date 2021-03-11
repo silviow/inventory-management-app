@@ -385,7 +385,7 @@ public class Interacao {
                     System.out.print("\n");
                     System.out.println("O que você deseja alterar?");
                     System.out.println("    1 - Adicionar um novo item à nota fiscal");
-                    System.out.println("    2 = Excluir item da nota fiscal");
+                    System.out.println("    2 - Excluir item da nota fiscal");
                     int infoASerAlterada = entradas.nextInt();
 
                     switch (infoASerAlterada) {
@@ -411,11 +411,11 @@ public class Interacao {
                                 Item novoItem = new Item(produtoASerIncluidoNaNF, quantidadeDoProduto);
                                 boolean itemFoiAdicionado = notaFiscalAAlterar.addItem(novoItem);
         
-                                if (itemFoiAdicionado){
+                                if (itemFoiAdicionado) {
                                     novoItem.getProduto().setQuantidade(novoItem.getProduto().getQuantidade() - quantidadeDoProduto);
                                     System.out.println("Produto adicionado à nota fiscal :)");
-                                }else{
-                                    System.out.println("O item não pode ser adicionado à nota fiscal");
+                                } else {
+                                    System.out.println("O item não pode ser adicionado à nota fiscal :(");
                                 }
                             } else {
                                 System.out.println(
@@ -431,20 +431,25 @@ public class Interacao {
                             int codigoProduto = entradas.nextInt();
 
                             List<Item> listaItens = notasFiscais.getNotaFiscal(codigoDaNotaAAlterar).getItems();
+
                             boolean deuCerto = false;
-                            for (Item item : listaItens){
-                                if (item.getProduto().getCodigo() == codigoProduto){
+
+                            for (Item item : listaItens) {
+                                if (item.getProduto().getCodigo() == codigoProduto) {
                                     deuCerto = notasFiscais.removeItem(codigoDaNotaAAlterar, item);
+
                                     if (deuCerto){
                                         item.getProduto().setQuantidade(item.getProduto().getQuantidade() + item.getQuantidade());
-                                        System.out.println("O item foi retirado com sucesso da Nota Fiscal");
+                                        
+                                        System.out.println("O item foi retirado com sucesso da Nota Fiscal :)");
                                     } else{
-                                        System.out.println("O item não pode ser retirado da Nota Fiscal");
+                                        System.out.println("O item não pode ser retirado da Nota Fiscal :(");
                                     }
                                     break;
                                 }
                             }
                             break;
+                            
                         default:
                             System.out.print("\n");
                             System.out.println("Entrada inválida :(");
@@ -452,6 +457,7 @@ public class Interacao {
                             System.out.print("\n");
                             System.out.println("O que você deseja alterar?");
                             System.out.println("    1 - Adicionar um novo item à nota fiscal");
+                            System.out.println("    2 - Excluir item da nota fiscal");
                             infoASerAlterada = entradas.nextInt();
 
                             break;
@@ -470,11 +476,11 @@ public class Interacao {
             case 9:
                 List<NotaFiscal> arrayNotasFiscais = notasFiscais.getNotasFiscais();
                 
-                System.out.println("Digite o dia");
+                System.out.println("Digite o dia:");
                 int dia = entradas.nextInt();
-                System.out.println("Digite o mês");
+                System.out.println("Digite o mês:");
                 int mes = entradas.nextInt();
-                System.out.println("Digite o ano");
+                System.out.println("Digite o ano:");
                 int ano = entradas.nextInt();
 
                 Calendar data;
@@ -484,18 +490,21 @@ public class Interacao {
                 double valorVendas = 0f;
                 for (NotaFiscal notaF : arrayNotasFiscais){
                     data = notaF.getCalendar();
+
                     diaData = data.get(Calendar.DAY_OF_MONTH);
                     mesData = data.get(Calendar.MONTH) + 1;
                     anoData = data.get(Calendar.YEAR);
                     
                     if (dia == diaData && mes == mesData && ano == anoData){
                         List<Item> listItens = notaF.getItems();
+
                         for (Item item : listItens){
                             valorVendas += item.getProduto().getPreco() * item.getQuantidade();
                         }
                     }
                 }
-                System.out.printf("No dia %d/%d/%d foi vendido R$%.2f em produtos", dia, mes, ano, valorVendas);
+                
+                System.out.printf("Na data %d/%d/%d foram vendidos R$%.2f em produtos.", dia, mes, ano, valorVendas);
 
                 exibirMenu(entradas);
                 break;
@@ -507,7 +516,7 @@ public class Interacao {
             default:
                 System.out.print("\n");
                 System.err.println("Entrada inválida :(");
-                System.err.println("Por gentileza, escolha uma opção do menu digitando um número inteiro de 0 a 10");
+                System.err.println("Por gentileza, escolha uma opção do menu digitando um número inteiro de 1 a 10");
                 
                 exibirMenu(entradas);
         }
